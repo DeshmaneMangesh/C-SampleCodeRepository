@@ -1,0 +1,498 @@
+C#
+
+- virtual and override
+   In inheritance if we need to extend or re-write the base class function into derived class then we use virtual and override.
+   Base class method, which we want to extend in derived class, declared as a virtual. 
+   In derived class, we override the method, which we declared virtual in base class.
+- inheritance 
+
+- Serialization in C#
+  Serialization is the process of converting an object into a stream of bytes to store the object or transmit it to memory, a database, or a file. 
+  Its main purpose is to save the state of an object in order to be able to recreate it when needed. The reverse process is called deserialization
+
+Design Pattern  : https://dotnettutorials.net/course/dot-net-design-patterns/
+1)Creational : responsible for instance/object creation and initialization
+ e.g Singleton, Abstract factory, factory method, Builder, Prototype etc.
+2)Structural : responsible for instance structure and relationship between object and class
+ e.g  Adapter, Bridge, Composite, Flyweight, Proxy
+3)Behavioral : responsible for behaviour of objects
+ e.g Mediator, Memento, Interpreter, Iterator, Command, Chain of Responsibility, State, Strategy, Observer, Template Method, Visitor. 
+
+Singleton design pattern, how to achieve it
+- only one object of class.
+define class as sealed class with constructor as private.
+
+ex:
+public sealed class Singleton1 {  
+    private Singleton1() {}  
+    private static Singleton1 instance = null;  
+    public static Singleton1 Instance {  
+        get {  
+            if (instance == null) {  
+                instance = new Singleton1();  
+            }  
+            return instance;  
+        }  
+    }  
+} 
+
+
+> SOLID principle
+ S : Single Responsibility : A Class should have only one purpose/responsibility
+ O : Open/Closed : A Class should be open for extension and closed for modification
+ L : Liskov Substitution : you should be able to use any derived class instead of a parent class and have it behave in the same manner without modification
+ I : Interface Segregation : clients should not be forced to implement interfaces they don't use. Instead of one fat interface, many small interfaces are preferred based on groups of methods, each one serving one submodule
+ D : Dependency Inversion :  high-level modules/classes should not depend on low-level modules/classes. Both should depend upon abstractions.
+
+C#
+> interface and Abstraction
+> Boxing and Unboxing
+> Const and Readonly
+> Discuss design patterns
+> SOLID principles
+> how to write test cases and manage good coverage
+> diff between func, action and predict delegate
+> dependency injection -> .net core and .net framework
+> var dynamics keyword
+> overloading , overriding 
+> solid principles
+> thread & task difference
+> asp.net core middleware vs filter
+> implement custom extension method in C#
+   Extension method help you add more functionality to existing dll/library without modifying original code, inheriting or aggregating it.
+   define extension class and method with static keyword
+   also pass 1st parameter as this followed by extension method parameter.
+> static and private constructor difference
+
+> Sealed class
+> Static class - can have static or non static methods
+> delegates
+
+> generic : 
+> localization & Globalization
+> web.config file
+> page load
+> page load lifecycle
+> GAC
+> Readonly and Constant
+
+Generics :
+ tuple if similar methods for different data types e.g int , float or string use generic<T> ( T x, T y)
+ delegates : are function pointer created using delegate keyword.
+ 
+ 3 types : Func , Action , Predicate
+ 
+ 1) Func Delegate :  when we have a function which accepts input and return some output use Func< input, output> NameOfDelegate = input parameter => function body;
+ 2) Action Delegate : when we have a function which accepts input but has return type as void use Action<input> NameOfDelegate = input parameter => function body;
+ 3) Predicate Delegate : when we have a function which accepts input but has return type as bool we use Predicate<input> NameOfDelegate = input parameter => function body;
+
+Array Methods
+
+Methods -> https://danielsimionescu.com/csharp/arrays/methods.html
+
+We are going to see the top 10 most important methods provided by the Array class.
+
+#IndexOf
+This returns the index of an item inside the array – in our case 2 for lemon 🍋
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.IndexOf(fruits, "lemon");
+
+Console.WriteLine(result); // 2
+#Exists
+It checks to see whether or not an item exists in an array (this accepts a Predicate):
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.Exists(fruits, fruit => fruit.Contains("l"));
+
+Console.WriteLine(result);
+#Find
+This simply finds an item in an array:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.Find(fruits, fruit => fruit.Contains("l"));
+
+Console.WriteLine(result);
+#FindLast
+As the Find method, but this starts from the end of the array:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.FindLast(fruits, fruit => fruit.Contains("l"));
+
+Console.WriteLine(result);
+#FindIndex
+We can also find the index of an item by using a Predicate:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.FindIndex(fruits, fruit => fruit.Contains("l"));
+
+Console.WriteLine(result);
+#FindAll
+We can find all the items that pass a certain condition:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+var result = Array.FindAll(fruits, fruit => fruit.Contains("l"));
+
+foreach (var fruit in result)
+{
+    Console.WriteLine(fruit);
+}
+#Reverse
+We can reverse the items in an array:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+Array.Reverse(fruits);
+
+foreach (var fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
+#Copy
+We can copy the items of an array to another one.
+
+The third argument is to specify how many items you want to copy:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+var fruits2 = new string[fruits.Length];
+
+Array.Copy(fruits, fruits2, 2);
+TIP
+
+To copy all the items, just pass fruits.Length as the third argument.
+
+#Sort
+And one of the most important things is to sort an array:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+Array.Sort(fruits);
+
+foreach (var fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
+Maybe we want to reverse the order (descending).
+
+In this case, we need to create a new class which implements the IComparer interface:
+
+public class ReverseComparer : IComparer<String>
+{
+    public int Compare(string x, string y)
+    {
+        return y.CompareTo(x);
+    }
+}
+And then, just pass an instance of this class as an argument:
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+Array.Sort(fruits, new ReverseComparer());
+
+foreach (var fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
+#BinarySearch
+You can search for an element in a sorted array (make sure to sort the array in ascending order before applying this algorithm):
+
+var fruits = new[] { "melon", "coconut", "lemon" };
+
+Array.Sort(fruits);
+
+var index = Array.BinarySearch(fruits, "coconut");
+if (index == -1)
+    Console.WriteLine("nothing");
+else
+    Console.WriteLine(index);
+Duplicates
+
+If an array contains duplicate elements (which have the same value), then BinarySearch will return the index of one of those elements.
+
+#Next
+
+
+SQL
+Left join = entries from left table + matching entries from right table ,
+inner join = matching entries from both left and right , 
+outer join = All the entries from both left and right , 
+right join = entries from right table + matching entries from left table
+
+
+table1 	table2
+x 		x
+y 		z
+z
+
+Inner = x  count = 2
+		z
+
+Left =  x count = 3
+		y
+		z
+
+Right = x count = 2 
+		z
+	
+Outer = x  count = 5
+		y
+		z
+		x
+		z
+
+
+
+primary , unique key
+ADO.net, framework
+
+function vs stored procedure
+
+SQL 
+> unique key 
+> diff between primary key and unique key
+> stored procedure and function
+> trigger
+> Common Table Expression
+> 
+  > Stored procedure
+    CREATE PROCEDURE nameofProcedure
+	AS
+	PRINT 'Hello World'
+
+  > Function
+   CREATE FUNCTION nameofFunction
+   RETURNS varchar(20)
+   AS
+   BEGIN
+   PRINT 'Hello World'
+   END
+  
+  Function  
+   - must return value 
+   - can return only one value
+   - Code is compiled each time you called
+   - it can only perform select/read operations, can't perform insert/update or delete ops
+   - function can have only input parameter
+   - function can't call stored procedure in it.
+   - function can be called in select statements
+   - can be used in filter clause such as where/having/nested queries
+   - can use in sql join
+   - does not support Transactions
+   - does not support exception handling
+   
+   Requirement : if more read is required go for function
+   
+  Stored procedure 
+   - optional to return value
+   - can return 1 or more values
+   - code is precompiled at creation time(no compilation required while call)
+   - it can perform both select/read operations and insert/update or delete ops
+   - procedure can have input and output parameter.
+   - procedure can call functions in it.
+   - procedure can't be called in select statements
+   - cannot use in the filter clause
+   - cannot use in SQL joins
+   - support Transactions
+   - support Exception handling
+   
+   Requirement : if insert/update delete operation are performed go for procedures
+   
+   
+> diff between union and union all
+> CTE and usage
+> diff between Temp table and Table Variable
+> Row level security
+
+
+Find 3rd hightest salary of employee
+
+WebAPI
+
+REST API
+diff between Update and post
+REST authentication
+> authentication and authorization
+> nullable types
+> generic
+
+Logic
+str = "Train Bus Bus Train Taxi Aeroplane Taxi Bus"
+output = {“Train”:2, “Bus” : 3, “Taxi”:2 , “Aeroplane”: 1}
+
+Agile
+- min and max sprint timelines
+- Ceremionies of Agile
+   Sprint planning.
+   Daily stand-up.
+   Sprint review.
+   Sprint retrospective.
+
+
+DevOps
+
+ - deployments for C# in devops 
+ - docker images using C# 
+
+ 
+GIT
+
+Git branching strategy 
+1) Git Flow Branch: it supports multiple branches such as master, develop, feature, release and hotfix, it doesn't support CI/CD
+2) Github flow : simple one, no multiple branch to maintain , every peace of code to be part of master branch
+3) GitLab flow : all changes are done in master and then cherry-picked to form stable 1.0 version of deliverable, it supports CI and versioning.
+
+Conflit resolving
+
+Commands to Resolve Conflicts
+1. git log --merge 
+The git log --merge command helps to produce the list of commits that are causing the conflict
+
+2. git diff 
+The git diff command helps to identify the differences between the states repositories or files
+
+3. git checkout 
+The git checkout command is used to undo the changes made to the file, or for changing branches
+
+4. git reset --mixed 
+The git reset --mixed command is used to undo changes to the working directory and staging area
+
+5. git merge --abort
+The git merge --abort command helps in exiting the merge process and returning back to the state before the merging began
+
+6. git reset
+The git reset command is used at the time of merge conflict to reset the conflicted files to their original state
+
+how to give access to specific user to repository
+git pull mechanism
+process before merging branches
+
+
+AWS
+CodeGuru, Codepipeline
+Route53 and its algorithms(policy)
+Load Balancing and its working
+AutoScaling and its working
+EBS underutilized
+Architectural guidance for cost optimization
+Trusted Advisor
+Storage classes
+Instance type
+current project
+Redshift 
+Glue
+Athena
+EC2 
+ - security group components
+ - Ec2 instance failed to start how to check logs
+ 
+S3 
+ - how to delete s3 bucket
+IAM Profile
+ - Action, effect, resource, principle
+Storage instance - EBS, Instance store etc
+Command Line / Programmatic API
+ - Public vs private subnet
+ - internet gateway vs Nat gateway
+ - api gateway
+ 
+Docker / docker Swarm
+- Docker commands in docker Image\
+- command to inside the container 
+- command to save and exit from the container
+
+Kubernetes
+ - Kubectl commands
+ - logs of failing pods
+ - delete pods
+ - cron jobs
+ - types of services
+ - different strategy & explain rolling updates
+ - Namespace in kubernetes
+ - ingress
+ 
+ 
+Terraform
+Ansible
+
+
+
+Jenkins 
+- Scripted / architecture
+- explain pipeline
+- global variables
+- store password
+- slave node setup
+- setup jenkins through docker image
+- how to setup CI/CD pipeline
+- initial password of Jenkins
+- Jenkins webhooks
+
+
+managerial round
+
+7+ years in same company
+thought process to change the company.
+Choosing AWS over Microsoft
+what roles and responsibility 
+Python 
+
+Which all services of AWS have you used
+
+
+
+Cybase:
+
+> Docker images pre-scan for vulernabilities before deployments
+> SonarQube scanning vulernabilities in CI/CD
+> Plugins used in Jenkins
+> Kubernetes configured with Jenkins
+> Terraform 
+> Ansible
+> build tools used for Java projects and .Net projects in Jenkins
+> define CI/CD pipeline
+
+AWS
+> different storages
+> S3 classes
+> VPC private and public subnet
+> how to access application in private subnet from outside world
+> webserver, apiserver and  Database in which subnet
+
+DevOps preparation
+> Must know technology
+  - Terraform/CloudFormation
+  - Git
+  - Jenkins/Code pipeline
+
+> highly recommended
+ - DevOps pipeline/ Microservices
+ - Kubernetes/ Serverless(Lambda)
+ - AWS DevOps certification
+ 
+> corner case
+ - Ansible
+ - Elastic beanstalk
+ 
+> Task
+ - Automated Testing
+ - Rollback
+ - selective deployment (on few VMs/EC2 machines)
+ - canary/rolling deployment
+ - shared account to business account
+ - manual aproval
+ - security checks
+ 
+
+
+Emphasis - L3 support role in DevOps
+> SonarQube
+> Custom plugins in Jenkins, how to build core plugins
+> Maven Nexus
+> Webhooks in Jenkins
+> git revert vs reset
